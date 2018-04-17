@@ -37,17 +37,20 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray list = response.getJSONArray("list");
-                            for (int j = 0; j < list.length(); j++) {
-                                JSONObject listJour = (JSONObject) list.getJSONObject(j);
 
-                                JSONArray weather = listJour.getJSONArray("weather");
-                                for (int i = 0; i < weather.length(); i++) {
-                                    JSONObject weatherInfos = (JSONObject) weather.getJSONObject(i);
-                                    String description = weatherInfos.getString("description");
-                                    Toast.makeText(MainActivity.this, description, Toast.LENGTH_SHORT).show();
+                            JSONArray list = response.getJSONArray("list");
+
+                            for (int j = 0; j < 40; j = j + 8) {
+                                JSONObject listinfo = list.getJSONObject(j);
+                                JSONArray tableWeather = listinfo.getJSONArray("weather");
+
+                                for (int i = 0; i < tableWeather.length(); i++) {
+                                    JSONObject elemtMeteo = tableWeather.getJSONObject(i);
+                                    String meteo = elemtMeteo.getString("description");
+                                    Toast.makeText(MainActivity.this, meteo, Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
